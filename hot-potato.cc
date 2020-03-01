@@ -14,6 +14,7 @@
 #include <fstream>
 #include "hot-potato.h"
 #include <unistd.h>
+#include <mqueue.h>
 
 using namespace std;
 
@@ -41,24 +42,28 @@ int main(int argc, char **argv)
 	}
 
 	//TODO create message queue for potato passing (dak160130)
+	mqd_t mq = mq_open("/mq_dak160130", 0);
 
-	//TODO fork 5 times so that we have 5 children. be careful about if() statements so taht we don't get too many forks
+	//TODO fork 5 times so that we have 5 children. be careful about if() statements so that we don't get too many forks
 	pid_t pid = 1; //start it as nonzero so that the parent can do the initial fork
 	int numChildren = 0; //used later to track how many children there are left in the game
 	for (numChildren = 0; (numChildren < NUM_CHILDREN) && (pid != 0); numChildren++)
 	{
+		if(DEBUG) cout << "forking " << numChildren << endl;
 		pid = fork(); // we need more children bc we're Catholic
 	}
 
 	if (pid != 0) //parent process
 	{
 		while(true){
-		//TODO release the krakken!!! I mean potato
+		mq_send(mq,"stuff",sizeof("stuff"),0); //TODO release the krakken!!! I mean potato
+		if(DEBUG) cout << "in the parent" << getpid() <<endl;
 		//TODO wait for a message on pipe (just read -- it's a blocking command). One will come in when someone hits 1000 catches
 		//TODO store loser info (info came in on the pipe)
 		//TODO send SIGUSR1 signal to all children. loser will terminate, rest will send their counts to the parent via the pipe (then reset count to zero)
 		//TODO for loop thru remaining children, reading from pipe for each and recording their id and catch count
 		//TODO if(numChildren == 1), break
+		break;
 		}
 		//TODO share stats with user
 		//TODO wait for last child(ren) to terminate
@@ -79,6 +84,8 @@ int main(int argc, char **argv)
 			else { //not a loss
 				//TODO add a potato to the queue
 			}
+			if(DEBUG) cout << "in the child" << getpid() << endl;
+			break;
 		}
 	}
 	
