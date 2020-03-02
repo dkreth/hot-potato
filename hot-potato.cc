@@ -33,7 +33,8 @@ int fd[2];//file descriptor for pipe
 * int main( int argc, char **argv )
 * Author: Dylan Kreth
 * Date: 2/24/2020
-* Description: //TODO: write main desc
+* Description:  plays hot potato between 5 processes. when a process has caught the potato 1000 times, it explodes and 
+ * the remaining processes play again
 *
 * Parameters:
 * argc I/P int The number of arguments on the command line
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
 				if(DEBUG2) cout << "PARENT: sent potato" << endl;
 				if(DEBUG) cout << "in the parent" << getpid() <<endl;
 				if(DEBUG2) cout << "PARENT: waiting for message on pipe" << endl;
-			read(fd[READ], &thisPack, sizeof(pack_t)); //TODO wait for a message on pipe (just read -- it's a blocking command). One will come in when someone hits 1000 catches
+			read(fd[READ], &thisPack, sizeof(pack_t)); // wait for a message on pipe (just read -- it's a blocking command). One will come in when someone hits 1000 catches
 				if(DEBUG2) cout << "PARENT: got a message on pipe. writing to file" << endl;
 			filestream << "\n===============================\nLOSER DETECTED: child" <<thisPack.pid << " with count " << thisPack.count << endl; // store loser info (info came in on the pipe)
 			filestream << "ROUND FINISHED\nRESULTS FROM THIS ROUND:\n\tPID\tCOUNT" << endl; //column headers
