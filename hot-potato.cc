@@ -19,6 +19,7 @@
 #include <signal.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <cstdlib>
 #include "hot-potato.h"
 
 using namespace std;
