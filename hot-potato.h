@@ -18,13 +18,14 @@ using namespace std;
 
 #define DEBUG 0 //switch to 1 for DEBUG output to stdout
 #define DEBUG2 0
-#define DEBUG3 1
+#define DEBUG3 0
 
-#define MAX_COUNT 5
+#define MAX_COUNT 1000
 #define READ 0
 #define WRITE 1
-#define NUM_CHILDREN 3
+#define NUM_CHILDREN 5
 #define RESULTS_FILE_NAME "results.txt"
+#define MQ_NAME "/mq_dak160130b"
 
 typedef struct Pack
 {
@@ -35,6 +36,7 @@ typedef struct Pack
 void signalHandler(int signal); //function prototype for helper
 void waitOnPotato(mqd_t mq); //function prototype
 void writeHeader(ofstream filestream, pack_t thisPack);
+void openPipe(int* fd); //function prototype
 
 
 #endif /* __FORKTIMER_H__ */
