@@ -96,9 +96,9 @@ int main(int argc, char **argv)
 
 		int* x; //for saving status into
 		waitpid(loserId, x, 0); // wait for last child(ren) to terminate to prevent broken pipe
-		if(mq_close(mq) < 0){// unlink the message queue
-			cerr << "error closing the message queue. " << strerror(errno) << endl; //report the mq_close error
-		}
+		// if(mq_close(mq) < 0){// unlink the message queue
+		// 	cerr << "error closing the message queue. " << strerror(errno) << endl; //report the mq_close error
+		// }
 		filestream.close(); //we're done writing
 	}
 
